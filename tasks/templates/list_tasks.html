@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Django crud</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="{% static 'main.css' %}">
+    </head>
+    <body>
+        <div class="">
+            <div class="row">
+                <div class="col-md-4 offser-md-4">
+                    <h1 class="display-6 fw-bold">Tasks</h1>
+
+        <form action="/tasks/new/" method="POST" class="card card-body by-black">
+            {% csrf_token %}
+            <label for="title">title</label>
+            <input type="text" name="title" placehoder="Write a title" class="form-control mb-2">
+            <label for="description">Description</label>
+            <textarea name="description" row="3" placehoder="Write a description" class="form-control mb-2"></textarea>
+
+            <button class="btn btn-success">save<button>
+        </form>
+
+{% for task in tasks %}
+<div class="card card-body text-black mb-2 d-flex flwe-row justify-content-between">
+    <div>
+        <h4>{{task.title}}</h4>
+        <p>{{task.description}}</p>
+    </div>
+    <form action="{% url 'delete_task' task.id %}" method="POST">
+        {% csrf_token %}
+    <button class="btn btn-danger btn-cm">Delete</button>
+    </form>
+</div>
+{% empty %}
+<h1 class="display-4 texr-center fw-bolder">No Task yet</h1>
+{% endfor %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
